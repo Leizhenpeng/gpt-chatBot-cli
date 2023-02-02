@@ -1,11 +1,8 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
 	"fmt"
+	"leizhenpeng/go-gpt3-cli/services"
 
 	"github.com/spf13/cobra"
 )
@@ -13,28 +10,54 @@ import (
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Run a gp3 chat bot",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("run called")
+		keyMsg = services.GetKeyMag()
+		key := keyMsg.GetKey(keyName)
+		if key == "" {
+			fmt.Println(`You don't have a key, please set your key first.
+Find your key from https://beta.openai.com/account/api-keys.
+Run command : go-chat key -s <your key>`)
+			return
+		}
+		services.InitClient(key)
+		if cmd.Flag("interactive").Value.String() == "true" {
+			InteractiveMode()
+		} else if cmd.Flag("prompt").Value.String() != "" {
+			services.GetAnswer(cmd.Flag("prompt").Value.String())
+		} else {
+			cmd.Help()
+		}
+
 	},
 }
 
 func init() {
+	//check if the key is exist
+
+	//if not, ask user to input the key
+
 	rootCmd.AddCommand(runCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// runCmd.PersistentFlags().String("foo", "", "A help for foo")
+	//runCmd.PersistentFlags().StringP("foo", "f", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// runCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	runCmd.Flags().BoolP("interactive", "i", true, "interactive mode")
+	runCmd.Flags().StringP("prompt", "p", "hello gopher", "prompt mode")
+}
+
+func InteractiveMode() {
+	fmt.Print("Welcome to the GPT-3 chat bot. Type 'exit' to quit.\n")
+	for {
+		question := services.AskUserQuestion()
+		if question == "exit" {
+			break
+		}
+		services.GetAnswer(question)
+	}
 }

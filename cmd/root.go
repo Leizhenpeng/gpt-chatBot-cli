@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"leizhenpeng/go-gpt3-cli/utils"
+	"leizhenpeng/go-gpt3-cli/services"
 	"os"
 )
 
@@ -16,7 +16,7 @@ const (
 	AppName = "chat-go"
 )
 
-var keyMsg *utils.KeyMag
+var keyMsg *services.KeyMag
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -44,6 +44,7 @@ func Execute() {
 }
 
 func init() {
+	services.NewKeyMag()
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
