@@ -18,6 +18,17 @@
   <img src='./doc/shot2.png' alt='CLI ChatBot Power By Gpt3' width='600'/>
 </p>
 
+## development
+
+```bash
+make build
+```
+
+```bash
+go-chat key set <your-key>
+go-chat run
+```
+
 ## More Info
 
 - [Go Keyring library](https://github.com/zalando/go-keyring)

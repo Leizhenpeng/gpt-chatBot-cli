@@ -15,7 +15,7 @@ var runCmd = &cobra.Command{
 		keyMsg = services.GetKeyMag()
 		key := keyMsg.GetKey(keyName)
 		if key == "" {
-			fmt.Println(`You don't have a key, please set your key first.
+			fmt.Println(`Don't find open-api key, please set your key first.
 Find your key from https://beta.openai.com/account/api-keys.
 Run command : go-chat key -s <your key>`)
 			return
