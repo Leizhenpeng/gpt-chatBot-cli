@@ -21,7 +21,7 @@ var keyMsg *services.KeyMag
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   AppName,
-	Short: "A simple chat bot power by gpt3",
+	Short: "CLI ChatBot Power By Gpt3",
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {

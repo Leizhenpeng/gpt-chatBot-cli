@@ -1,9 +1,9 @@
 <p align='center'>
-  <img src='./doc/shot1.png' alt='' width='800'/>
+  <img src='./doc/shot1.png' alt='CLI ChatBot Power By Gpt3' width='800'/>
 </p>
 
 <p align='center'>
-A Simple ChatBot Power By <b>Gpt3</b><sup><em>(speed)</em></sup><br>
+    CLI ChatBot Power By <b>Gpt3</b><sup><em>(speed)</em></sup><br>
 </p>
 
 ## Features
@@ -15,7 +15,7 @@ A Simple ChatBot Power By <b>Gpt3</b><sup><em>(speed)</em></sup><br>
 ## Snapshot
 
 <p align='center'>
-  <img src='./doc/shot2.png' alt='' width='600'/>
+  <img src='./doc/shot2.png' alt='CLI ChatBot Power By Gpt3' width='600'/>
 </p>
 
 ## More Info
