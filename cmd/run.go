@@ -49,7 +49,7 @@ func init() {
 func InteractiveMode() {
 	//services.SetContext(ctx)
 	history := services.NewCacheHistory()
-	fmt.Print("Welcome to the GPT-3 chat bot. Type 'exit' to quit. Type 'clear' to clear the context.")
+	fmt.Print("Welcome to the GPT-3 chat bot. \nType 'exit' to quit, Type 'clear' to clear the context. \n")
 	for {
 		question := services.AskUserQuestion()
 		if question == "exit" {
