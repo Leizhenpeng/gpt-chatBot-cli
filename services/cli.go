@@ -21,5 +21,5 @@ func ReadUserInputWithPrompt(prompt string) string {
 }
 
 func AskUserQuestion() string {
-	return ReadUserInputWithPrompt("You:")
+	return ReadUserInputWithPrompt("You: ")
 }

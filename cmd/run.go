@@ -1,11 +1,17 @@
 package cmd
 
+// Context holds the information from the previous query
+
 import (
 	"fmt"
 	"leizhenpeng/go-gpt3-cli/services"
 
 	"github.com/spf13/cobra"
 )
+
+type Context struct {
+	PreviousQuery string
+}
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
@@ -33,31 +39,35 @@ Run command : go-chat key -s <your key>`)
 }
 
 func init() {
-	//check if the key is exist
-
-	//if not, ask user to input the key
 
 	rootCmd.AddCommand(runCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	//runCmd.PersistentFlags().StringP("foo", "f", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 	runCmd.Flags().BoolP("interactive", "i", true, "interactive mode")
 	runCmd.Flags().StringP("prompt", "p", "hello gopher", "prompt mode")
 }
 
 func InteractiveMode() {
+	//services.SetContext(ctx)
+	history := services.NewCacheHistory()
 	fmt.Print("Welcome to the GPT-3 chat bot. Type 'exit' to quit.\n")
 	for {
 		question := services.AskUserQuestion()
 		if question == "exit" {
 			break
 		}
-		services.GetAnswer(question)
+		if question == "clear" {
+			history.ClearQACache()
+			continue
+		}
+		cache, b := history.GetQACache()
+		if b {
+			question = cache + "/n" + question
+		}
+		reply, ok := services.GetAnswer(question)
+
+		if ok {
+			history.SetQACache(question, reply)
+
+		}
 	}
 }

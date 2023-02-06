@@ -9,7 +9,7 @@ import (
 
 const (
 	maxTokens   = 3000
-	temperature = 0
+	temperature = 0.7
 	engine      = gpt3.TextDavinci003Engine
 )
 
@@ -19,9 +19,12 @@ func InitClient(api string) {
 	client = gpt3.NewClient(api)
 }
 
-func GetAnswer(question string) {
-	//fmt.Println(apiKey)
-	fmt.Print("Answer: ")
+var history = []string{}
+
+func GetAnswer(question string) (reply string, ok bool) {
+	fmt.Print("Bot: ")
+	ok = false
+	reply = ""
 	i := 0
 	ctx := context.Background()
 	if err := client.CompletionStreamWithEngine(ctx, engine, gpt3.CompletionRequest{
@@ -33,13 +36,17 @@ func GetAnswer(question string) {
 	}, func(resp *gpt3.CompletionResponse) {
 		if i > 1 {
 			fmt.Print(resp.Choices[0].Text)
+			reply += resp.Choices[0].Text
 		}
 		i++
 	}); err != nil {
 		log.Fatalln(err)
 	}
+	if reply != "" {
+		ok = true
+	}
 	fmt.Println()
-	fmt.Println()
+	return reply, ok
 }
 
 func FormatQuestion(question string) string {
